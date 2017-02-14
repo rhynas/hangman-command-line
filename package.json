@@ -1,0 +1,22 @@
+{
+  "name": "hangman-command-line",
+  "version": "1.0.0",
+  "description": "Hangman game run with Node.js using inquirer package and Javascript constructors",
+  "main": "game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rhynas/hangman-command-line.git"
+  },
+  "author": "Rhyna Silva",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rhynas/hangman-command-line/issues"
+  },
+  "homepage": "https://github.com/rhynas/hangman-command-line#readme",
+  "dependencies": {
+    "inquirer": "^3.0.1"
+  }
+}
