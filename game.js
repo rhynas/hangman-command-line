@@ -10,6 +10,7 @@ var musicGenres = ['jazz', 'blues', 'country', 'reggae', 'electronic', 'alternat
 var olimpicSports = ['archery', 'badminton', 'basketball', 'boxing', 'cycling', 'football', 'diving', 'fencing', 'gymnastics', 'marathon', 'swimming', 'weightlifting', 'volleyball', 'triathlon', 'wrestling'];
 var fruits = ['Banana', 'grapefruit', 'mandarin', 'watermelon', 'strawberry', 'cantaloupe', 'dragonfruit', 'coconut', 'cranberry', 'pineapple', 'pomegranite', 'papaya'];
 
+//Global Variables
 var wordToPlay = "";
 var wordObject;
 var guessCount = 0;
@@ -19,17 +20,13 @@ var maxGuesses = 6;
 function selectTheme(){
     inquirer.prompt([
     {
-    type: "list",
-    name: "theme",
-    message: "Select a Theme: ",
-     // choices: ["Bulbasaur", "Squirtle", "Charmander"],
-   // new inquirer.Separator()
-   choices:["Musical Instruments", "Music Genres", 
-            "Olimpic Sports", "Fruits", 
-            ]
+        type: "list",
+        name: "theme",
+        message: "Select a Theme: ",
+        choices:["Musical Instruments", "Music Genres", "Olimpic Sports", "Fruits", ]
     },
     ]).then(function(data){
-        console.log(data.theme);
+        //Assignethe word to play based on the selection from the user
         switch(data.theme) {
             case "Musical Instruments":
                 wordToPlay = musicalInstruments[Math.floor(Math.random()*musicalInstruments.length)];
@@ -44,11 +41,13 @@ function selectTheme(){
                 wordToPlay = fruits[Math.floor(Math.random()*fruits.length)];
                  break;
         }
-
+        //Create a new word object
         wordObject = new Word(wordToPlay);
         console.log(wordToPlay);
+        //We initialize the word with character '_'
         wordObject.init();
         console.log(wordObject.display());
+        //call a function that ask the user for his guessed letter
         askLetter();
 
     });
@@ -57,20 +56,20 @@ function selectTheme(){
 function askLetter(){
     inquirer.prompt([
     {
-    type: "input",
-    name: "guess",
-    message: "What letter do you guess? If you are done then say no."},
+        type: "input",
+        name: "guess",
+        message: "What letter do you guess? "
+    },
     ]).then(function(data){
-        // if (data.guess != 'no') {
-        if(!wordObject.correctWord()){
-            wordObject.updateLetter(data.guess.toLowerCase());
-
+        //keep accepting user guesses until the word is guessed or the suer run out of guesses
+        if((!wordObject.correctWord()) && (guessCount < maxGuesses)){  
+            var guessed = wordObject.updateLetter(data.guess.toLowerCase());
+            if(!guessed) guessCount++;
             console.log(wordObject.display());
 
             askLetter();
         }
         else{
-
             inquirer.prompt([
             {
                 type: "list",
@@ -81,11 +80,7 @@ function askLetter(){
             ]).then(function(play){
                 if (play.playAgain == "yes") selectTheme();
             });
-            // guessCount++;
-            // if(guessCount == maxGuesses){
-            //     console.log('You run out of Guesses');
-            // }
-        }
+       }
     });
 }
 

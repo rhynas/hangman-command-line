@@ -19,18 +19,19 @@ function Word(word){
     },
     this.updateLetter = function(guess){
         //one way
-        // for (var i=0; i<this.letters.length; i++){
-        //     if (this.letters[i].letter == guess){
-        //     	this.letters[i].found = true;
-        //     	return(true);
-        //     }
-        //     return false;
-        // }
-		for (var i = 0; i < this.letters.length; i++) {
-				if (this.letters[i].letter == guess){
-					this.letters[i].found = true;
-				}
-			}
+        var guessed = false;
+        for (var i=0; i<this.letters.length; i++){
+            if (this.letters[i].letter == guess){
+            	this.letters[i].found = true;
+            	guessed = true;	
+            }
+        }
+        return guessed;
+		// for (var i = 0; i < this.letters.length; i++) {
+		// 		if (this.letters[i].letter == guess){
+		// 			this.letters[i].found = true;
+		// 		}
+		// 	}
 		
     }
     this.correctWord = function(){
