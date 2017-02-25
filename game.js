@@ -18,11 +18,16 @@ var maxGuesses = 6;
 
 //Prompt to the user the themes options for selection
 function selectTheme(){
+    console.log('\n')
+    console.log('***********************************')
+    console.log('*** Welcome to Console Hangman ****')
+    console.log('***********************************')
+    console.log('\n')
     inquirer.prompt([
     {
         type: "list",
         name: "theme",
-        message: "Select a Theme: ",
+        message: "Please select a Theme: ",
         choices:["Musical Instruments", "Music Genres", "Olimpic Sports", "Fruits", ]
     },
     ]).then(function(data){
@@ -54,34 +59,35 @@ function selectTheme(){
 }
 
 function askLetter(){
-    inquirer.prompt([
-    {
-        type: "input",
-        name: "guess",
-        message: "What letter do you guess? "
-    },
-    ]).then(function(data){
-        //keep accepting user guesses until the word is guessed or the suer run out of guesses
-        if((!wordObject.correctWord()) && (guessCount < maxGuesses)){  
+    if((!wordObject.correctWord()) && (guessCount < maxGuesses)){    
+        inquirer.prompt([
+        {
+            type: "input",
+            name: "guess",
+            message: "What letter do you guess? "
+        },
+        ]).then(function(data){
             var guessed = wordObject.updateLetter(data.guess.toLowerCase());
             if(!guessed) guessCount++;
             console.log(wordObject.display());
 
             askLetter();
-        }
-        else{
-            inquirer.prompt([
-            {
-                type: "list",
-                name: "playAgain",
-                message: "Would you like to Play again? ",
-                choices:["yes", "no"]
-            },
-            ]).then(function(play){
-                if (play.playAgain == "yes") selectTheme();
-            });
-       }
-    });
+
+        });//end then inquirer
+    }
+
+    else{
+        inquirer.prompt([
+        {
+            type: "list",
+            name: "playAgain",
+            message: "Would you like to Play again? ",
+            choices:["yes", "no"]
+        },
+        ]).then(function(play){
+            if (play.playAgain == "yes") selectTheme();
+        });
+   }
 }
 
 selectTheme();

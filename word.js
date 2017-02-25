@@ -27,11 +27,7 @@ function Word(word){
             }
         }
         return guessed;
-		// for (var i = 0; i < this.letters.length; i++) {
-		// 		if (this.letters[i].letter == guess){
-		// 			this.letters[i].found = true;
-		// 		}
-		// 	}
+
 		
     }
     this.correctWord = function(){
